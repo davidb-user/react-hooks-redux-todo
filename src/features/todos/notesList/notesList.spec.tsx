@@ -1,5 +1,5 @@
 import React from "react";
-import { generateNote, noteMock, notesMock } from "../../../test/mockData";
+import { generateNote, noteMock, notesMock } from "../../../../test/mockData";
 import {
 	fireEvent,
 	getQueriesForElement,
@@ -11,9 +11,9 @@ import {
 	queryAllByClassName,
 	queryByClassName,
 	queryBySelector,
-} from "../../../test/queries";
+} from "../../../../test/queries";
 import userEvent from "@testing-library/user-event";
-import { createNoteId, Note } from "../../models/note";
+import { createNoteId, NoteModel } from "../types/note";
 
 export const getNotesList = (container: HTMLElement) =>
 	queryByClassName(container, classNames.notesList);
@@ -219,7 +219,7 @@ describe("NotesList", () => {
 
 			describe("completed notes available", () => {
 				it("should not display button", () => {
-					const notes: Note[] = [
+					const notes: NoteModel[] = [
 						{
 							id: createNoteId(),
 							content: "content",

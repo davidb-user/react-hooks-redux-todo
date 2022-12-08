@@ -9,6 +9,6 @@ export interface NoteDetails {
 	isComplete: boolean;
 }
 
-export interface Note extends NoteDetails {
+export interface NoteModel extends NoteDetails {
 	id: NoteId;
 }

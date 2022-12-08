@@ -1,15 +1,15 @@
-import { NoteDetails } from "../../models/note";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { NoteDetails } from "../features/todos/types/note";
+import { useAppDispatch, useAppSelector } from "./storeHooks";
 import {
 	addNote,
 	removeNotes,
 	setAllNotesCompleteState,
 	updateNote,
-} from "../../store/slice";
-import Checkbox from "../inputs/checkbox/checkbox";
-import Textbox from "../inputs/textbox/textbox";
-import NotesList from "../notesList/notesList";
+} from "./notesSlice";
+import Checkbox from "../common/components/inputs/checkbox/checkbox";
+import Textbox from "../common/components/inputs/textbox/textbox";
 import "./app.css";
+import NotesList from "../features/todos/notesList/notesList";
 
 export const classNames = {
 	app: "app",

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Note as NoteModel, NoteDetails, NoteId } from "../../models/note";
-import Button from "../inputs/button/button";
+import Button from "../../../common/components/inputs/button/button";
 import Note from "../note/note";
+import { NoteId, NoteDetails, NoteModel } from "../types/note";
 import "./notesList.css";
 
 export enum NotesFilter {

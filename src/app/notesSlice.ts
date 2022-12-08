@@ -1,20 +1,24 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { createNoteId, Note, NoteDetails } from "../models/note";
+import {
+	createNoteId,
+	NoteModel,
+	NoteDetails,
+} from "../features/todos/types/note";
 
 interface SliceState {
-	notes: Note[];
+	notes: NoteModel[];
 }
 
 const initialState: SliceState = {
 	notes: [],
 };
 
-export const slice = createSlice({
-	name: "notes",
+export const notesSlice = createSlice({
+	name: "notesSlice",
 	initialState,
 	reducers: {
 		addNote: (state, action: PayloadAction<{ noteContent: string }>) => {
-			const newNote: Note = {
+			const newNote: NoteModel = {
 				id: createNoteId(),
 				content: action.payload.noteContent,
 				isComplete: false,
@@ -57,6 +61,6 @@ export const slice = createSlice({
 });
 
 export const { addNote, removeNotes, updateNote, setAllNotesCompleteState } =
-	slice.actions;
+	notesSlice.actions;
 
-export default slice.reducer;
+export default notesSlice.reducer;

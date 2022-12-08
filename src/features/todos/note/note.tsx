@@ -1,8 +1,8 @@
 import React from "react";
-import { Note as NoteModel, NoteId, NoteDetails } from "../../models/note";
-import Button from "../inputs/button/button";
-import Checkbox from "../inputs/checkbox/checkbox";
-import Textbox from "../inputs/textbox/textbox";
+import { NoteModel as NoteModel, NoteId, NoteDetails } from "../types/note";
+import Button from "../../../common/components/inputs/button/button";
+import Checkbox from "../../../common/components/inputs/checkbox/checkbox";
+import Textbox from "../../../common/components/inputs/textbox/textbox";
 import "./note.css";
 
 interface NoteProps {

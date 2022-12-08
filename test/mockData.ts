@@ -1,13 +1,17 @@
-import { createNoteId, Note } from "../src/models/note";
+import { createNoteId, NoteModel } from "../src/features/todos/types/note";
 
 export const generateNote = ({
 	isComplete,
 	content,
-}: Partial<Note> = {}): Note => ({ id: createNoteId(), content, isComplete });
+}: Partial<NoteModel> = {}): NoteModel => ({
+	id: createNoteId(),
+	content,
+	isComplete,
+});
 
-function generateNotesList(length: number): Note[] {
+function generateNotesList(length: number): NoteModel[] {
 	return Array.from({ length }, generateNote);
 }
 
-export const noteMock: Note = generateNote();
-export const notesMock: Note[] = generateNotesList(3);
+export const noteMock: NoteModel = generateNote();
+export const notesMock: NoteModel[] = generateNotesList(3);

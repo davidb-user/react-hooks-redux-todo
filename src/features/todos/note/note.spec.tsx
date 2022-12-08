@@ -1,8 +1,8 @@
 import React from "react";
-import { generateNote, noteMock } from "../../../test/mockData";
+import { generateNote, noteMock } from "../../../../test/mockData";
 import { fireEvent, render, screen } from "@testing-library/react";
 import Note, { classNames } from "./note";
-import { queryByClassName } from "../../../test/queries";
+import { queryByClassName } from "../../../../test/queries";
 import userEvent from "@testing-library/user-event";
 
 const getNote = (container: HTMLElement) =>

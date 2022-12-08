@@ -1,12 +1,12 @@
-import React from "react";
-import { getQueriesForElement, render } from "@testing-library/react";
+import { getQueriesForElement } from "@testing-library/react";
 import App, { classNames } from "./app";
-import { queryByClassName, queryBySelector } from "../../../test/queries";
-import { getNotes, getNotesList } from "../notesList/notesList.spec";
+import { queryByClassName, queryBySelector } from "../../test/queries";
+import {
+	getNotes,
+	getNotesList,
+} from "../features/todos/notesList/notesList.spec";
 import userEvent from "@testing-library/user-event";
-import { Provider } from "react-redux";
-import store from "../../store/store";
-import { renderWithProviders } from "../../../test/renderWithProviders";
+import { renderWithProviders } from "../../test/renderWithProviders";
 
 const getApp = (container: HTMLElement) =>
 	queryByClassName(container, classNames.app);
