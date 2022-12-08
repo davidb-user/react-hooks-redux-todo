@@ -4,7 +4,7 @@ import { queryByClassName, queryBySelector } from "../../test/queries";
 import {
 	getNotes,
 	getNotesList,
-} from "../features/todos/notesList/notesList.spec";
+} from "../features/todos/components/notesList/notesList.spec";
 import userEvent from "@testing-library/user-event";
 import { renderWithProviders } from "../../test/renderWithProviders";
 
@@ -13,7 +13,7 @@ const getApp = (container: HTMLElement) =>
 const getToggleCompleteAllNotes = (container: HTMLElement) => {
 	const toggleCompleteAllNotesWrapper = queryByClassName(
 		container,
-		classNames.toggleCompleteAllNotes,
+		classNames.manageNotes,
 	);
 	if (!toggleCompleteAllNotesWrapper) {
 		return null;
@@ -24,7 +24,7 @@ const getToggleCompleteAllNotes = (container: HTMLElement) => {
 };
 const getCreateNoteContentInput = (container: HTMLElement) =>
 	getQueriesForElement(
-		queryByClassName(container, classNames.createNoteContentInput),
+		queryByClassName(container, classNames.manageNotes),
 	).queryByRole("textbox", {});
 
 async function createNote(

@@ -1,8 +1,10 @@
-.checkbox-wrapper {
-	position: relative;
-}
+import styled from "styled-components";
 
-.checkbox {
+export const CheckboxWrapper = styled.div`
+	position: relative;
+`;
+
+export const Checkbox = styled.input`
 	position: relative;
 	width: 3em;
 	height: 3em;
@@ -14,9 +16,9 @@
 	border: 1px solid #535353;
 	appearance: none;
 	cursor: pointer;
-}
+`;
 
-.checkmark {
+export const Checkmark = styled.span`
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -30,4 +32,4 @@
 	user-select: none;
 	font-size: inherit;
 	font-family: inherit;
-}
+`;

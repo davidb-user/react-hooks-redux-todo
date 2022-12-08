@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import "./textbox.css";
+import * as Styles from "./textbox.style";
 
 interface TextProps {
 	onSubmit(newValue: string): void;
@@ -48,18 +48,9 @@ export function Textbox(props: TextProps): JSX.Element {
 		setValue(newValue);
 	};
 
-	const classNames = ["text-input"];
-
-	if (props.doubleClickToEdit) {
-		classNames.push("border-on-focus");
-	}
-
 	return (
-		<div
-			className={classNames.join(" ")}
-			onDoubleClick={onInputDoubleClick}
-		>
-			<input
+		<Styles.TextInputWrapper onDoubleClick={onInputDoubleClick}>
+			<Styles.TextInput
 				value={value}
 				type={"text"}
 				onChange={e => {
@@ -71,8 +62,9 @@ export function Textbox(props: TextProps): JSX.Element {
 				ref={inputRef}
 				autoFocus
 				placeholder={props.placeholderText}
+				addBorderOnFocus={props.doubleClickToEdit}
 			/>
-		</div>
+		</Styles.TextInputWrapper>
 	);
 }
 

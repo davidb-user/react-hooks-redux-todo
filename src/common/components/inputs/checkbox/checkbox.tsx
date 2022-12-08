@@ -1,5 +1,5 @@
 import React from "react";
-import "./checkbox.css";
+import * as Styles from "./checkbox.style";
 
 interface CheckboxProps {
 	isChecked: boolean;
@@ -14,15 +14,17 @@ export function Checkbox(props: CheckboxProps): JSX.Element {
 
 	const { isChecked } = props;
 	return (
-		<div className="checkbox-wrapper">
-			<input
+		<Styles.CheckboxWrapper className="checkbox-wrapper">
+			<Styles.Checkbox
 				type={"checkbox"}
 				className="checkbox"
 				checked={isChecked}
 				onChange={onChange}
 			/>
-			{isChecked === true && <span className="checkmark">✔️</span>}
-		</div>
+			{isChecked === true && (
+				<Styles.Checkmark className="checkmark">✔️</Styles.Checkmark>
+			)}
+		</Styles.CheckboxWrapper>
 	);
 }
 

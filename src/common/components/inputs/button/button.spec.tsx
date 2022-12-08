@@ -22,7 +22,7 @@ describe("Button", () => {
 				it("should set selected class", () => {
 					render(<Button onClick={jest.fn()} isSelected={true} />);
 
-					expect(getButton()).toHaveClass("selected");
+					expect(getButton()).toHaveStyle("border: 1px solid pink");
 				});
 			});
 
@@ -30,7 +30,9 @@ describe("Button", () => {
 				it("should not set selected class", () => {
 					render(<Button onClick={jest.fn()} isSelected={false} />);
 
-					expect(getButton()).not.toHaveClass("selected");
+					expect(getButton()).not.toHaveStyle(
+						"border: 1px solid pink",
+					);
 				});
 			});
 		});

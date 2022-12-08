@@ -5,12 +5,14 @@ import {
 	NoteDetails,
 } from "../features/todos/types/note";
 
-interface SliceState {
-	notes: NoteModel[];
+export interface SliceState {
+	notes: Record<string, NoteModel>;
+	noteIdsOrder: string[];
 }
 
-const initialState: SliceState = {
-	notes: [],
+export const initialState: SliceState = {
+	notes: {},
+	noteIdsOrder: [],
 };
 
 export const notesSlice = createSlice({
@@ -23,14 +25,18 @@ export const notesSlice = createSlice({
 				content: action.payload.noteContent,
 				isComplete: false,
 			};
-			state.notes.push({ ...newNote });
+			state.notes[newNote.id] = newNote;
+			state.noteIdsOrder.push(newNote.id);
 		},
 		removeNotes: (
 			state,
 			action: PayloadAction<{ noteIdsToRemove: string[] }>,
 		) => {
-			state.notes = state.notes.filter(note => {
-				return !action.payload.noteIdsToRemove.includes(note.id);
+			action.payload.noteIdsToRemove.forEach(noteId => {
+				delete state.notes[noteId];
+			});
+			state.noteIdsOrder = state.noteIdsOrder.filter(noteId => {
+				return !action.payload.noteIdsToRemove.includes(noteId);
 			});
 		},
 		updateNote: (
@@ -40,21 +46,16 @@ export const notesSlice = createSlice({
 				newNoteDetails: Partial<NoteDetails>;
 			}>,
 		) => {
-			state.notes = state.notes.map(note => {
-				return note.id === action.payload.noteId
-					? { ...note, ...action.payload.newNoteDetails }
-					: note;
-			});
+			const noteId = action.payload.noteId;
+			const note = state.notes[noteId];
+			Object.assign(note, action.payload.newNoteDetails);
 		},
 		setAllNotesCompleteState: (
 			state,
 			action: PayloadAction<{ newIsCompleteStatus: boolean }>,
 		) => {
-			state.notes = state.notes.map(note => {
-				return {
-					...note,
-					isComplete: action.payload.newIsCompleteStatus,
-				};
+			Object.values(state.notes).forEach(note => {
+				note.isComplete = action.payload.newIsCompleteStatus;
 			});
 		},
 	},

@@ -1,5 +1,5 @@
 import React from "react";
-import "./button.css";
+import * as Styles from "./button.style";
 
 interface ButtonProps extends React.PropsWithChildren {
 	isSelected?: boolean;
@@ -11,17 +11,10 @@ export function Button({
 	children,
 	isSelected,
 }: ButtonProps): JSX.Element {
-	const classNames = ["button"];
-
-	if (isSelected) {
-		classNames.push("selected");
-	}
-	const className = classNames.join(" ");
-
 	return (
-		<button onClick={onClick} className={className}>
+		<Styles.Button isSelected={isSelected} onClick={onClick}>
 			{children}
-		</button>
+		</Styles.Button>
 	);
 }
 

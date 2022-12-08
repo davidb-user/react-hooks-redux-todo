@@ -1,9 +1,9 @@
 import React from "react";
-import { NoteModel as NoteModel, NoteId, NoteDetails } from "../types/note";
-import Button from "../../../common/components/inputs/button/button";
-import Checkbox from "../../../common/components/inputs/checkbox/checkbox";
-import Textbox from "../../../common/components/inputs/textbox/textbox";
-import "./note.css";
+import { NoteModel as NoteModel, NoteId, NoteDetails } from "../../types/note";
+import Button from "../../../../common/components/inputs/button/button";
+import Checkbox from "../../../../common/components/inputs/checkbox/checkbox";
+import Textbox from "../../../../common/components/inputs/textbox/textbox";
+import * as Styles from "./note.style";
 
 interface NoteProps {
 	onNoteUpdated: (
@@ -40,7 +40,7 @@ export function Note(props: NoteProps): JSX.Element {
 	};
 
 	return (
-		<div className={classNames.note}>
+		<Styles.Note className={classNames.note}>
 			<Checkbox
 				isChecked={note.isComplete}
 				onChange={onCompleteStatusChange}
@@ -51,7 +51,7 @@ export function Note(props: NoteProps): JSX.Element {
 				onSubmit={onNoteContentChange}
 			/>
 			<Button onClick={onRemoveNote}>🗑</Button>
-		</div>
+		</Styles.Note>
 	);
 }
 

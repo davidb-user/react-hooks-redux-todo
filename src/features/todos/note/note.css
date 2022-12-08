@@ -1,9 +1,0 @@
-.notes,
-.notes > div,
-.note {
-	width: 100%;
-}
-
-.note {
-	display: flex;
-}

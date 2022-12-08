@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import Button from "../../../common/components/inputs/button/button";
+import Button from "../../../../common/components/inputs/button/button";
 import Note from "../note/note";
-import { NoteId, NoteDetails, NoteModel } from "../types/note";
-import "./notesList.css";
+import { NoteId, NoteDetails, NoteModel } from "../../types/note";
+import * as Styles from "./noteList.style";
+import * as CommonStyles from "../../../../common/styles/styles";
 
 export enum NotesFilter {
 	All = "all",
@@ -21,7 +22,6 @@ interface NotesListProps {
 
 export const classNames = {
 	notesList: "notes-list",
-	notes: "notes",
 	notesManagement: "notes-management",
 	notesInfo: "notes-info",
 	notesFilterButtons: "notes-filter-buttons",
@@ -60,14 +60,17 @@ export function NotesList({
 		return Object.entries(NotesFilter).map(
 			([filterEnumKey, filterEnumValue]) => {
 				return (
-					<span key={filterEnumValue} className={filterEnumValue}>
+					<Styles.NotesFilterButton
+						key={filterEnumValue}
+						className={filterEnumValue}
+					>
 						<Button
 							isSelected={activeFilter === filterEnumValue}
 							onClick={() => setActiveFilter(filterEnumValue)}
 						>
 							{filterEnumKey}
 						</Button>
-					</span>
+					</Styles.NotesFilterButton>
 				);
 			},
 		);
@@ -78,9 +81,9 @@ export function NotesList({
 	const completedNotesLength = notes.filter(note => !note.isComplete).length;
 
 	return (
-		<div className={classNames.notesList}>
-			<div role={"list"} className={classNames.notes}>
-				<div role={"listitem"}>
+		<Styles.NotesList className={classNames.notesList}>
+			<CommonStyles.List role={"list"}>
+				<CommonStyles.ListItem role={"listitem"}>
 					{filteredNotes.map(note => (
 						<Note
 							key={note.id}
@@ -89,29 +92,31 @@ export function NotesList({
 							onRemoveNote={noteId => onRemoveNotes([noteId])}
 						/>
 					))}
-				</div>
-			</div>
+				</CommonStyles.ListItem>
+			</CommonStyles.List>
 			{notes.length > 0 && (
-				<div className={classNames.notesManagement}>
-					<div className={classNames.notesInfo}>
-						<span>
-							{completedNotesLength} item
-							{completedNotesLength === 1 ? "" : "s"} left
-						</span>
-					</div>
-					<div className={classNames.notesFilterButtons}>
+				<Styles.NotesManagement className={classNames.notesManagement}>
+					<Styles.NotesInfo className={classNames.notesInfo}>
+						{completedNotesLength} item
+						{completedNotesLength === 1 ? "" : "s"} left
+					</Styles.NotesInfo>
+					<Styles.NotesFilterButtons
+						className={classNames.notesFilterButtons}
+					>
 						{getFilterButtons(activeFilter)}
-					</div>
-					<div className={classNames.clearCompletedNotesButton}>
+					</Styles.NotesFilterButtons>
+					<Styles.ClearCompletedNotesButton
+						className={classNames.clearCompletedNotesButton}
+					>
 						{notes.filter(note => note.isComplete).length !== 0 && (
 							<Button onClick={onClearCompletedNotes}>
 								Clear completed
 							</Button>
 						)}
-					</div>
-				</div>
+					</Styles.ClearCompletedNotesButton>
+				</Styles.NotesManagement>
 			)}
-		</div>
+		</Styles.NotesList>
 	);
 }
 

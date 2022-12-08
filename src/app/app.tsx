@@ -8,19 +8,20 @@ import {
 } from "./notesSlice";
 import Checkbox from "../common/components/inputs/checkbox/checkbox";
 import Textbox from "../common/components/inputs/textbox/textbox";
-import "./app.css";
-import NotesList from "../features/todos/notesList/notesList";
+import NotesList from "../features/todos/components/notesList/notesList";
+import * as Styles from "./app.style";
+import * as CommonStyles from "../common/styles/styles";
 
 export const classNames = {
 	app: "app",
 	manageNotes: "manage-notes",
-	toggleCompleteAllNotes: "toggle-complete-all-notes",
-	createNoteContentInput: "create-note-content-input",
 	appWrapper: "app-wrapper",
 };
 
 export function App(): JSX.Element {
-	const notes = useAppSelector(state => state.notes);
+	const notes = useAppSelector(state =>
+		state.noteIdsOrder.map(noteId => state.notes[noteId]),
+	);
 	const dispatch = useAppDispatch();
 
 	function onNoteUpdated(
@@ -63,37 +64,33 @@ export function App(): JSX.Element {
 	}
 
 	return (
-		<div className={classNames.appWrapper}>
-			<div className={classNames.app}>
-				<h1>TODOS</h1>
-				<div className={classNames.manageNotes}>
+		<Styles.AppWrapper className={classNames.appWrapper}>
+			<Styles.App className={classNames.app}>
+				<Styles.AppTitle>TODOS</Styles.AppTitle>
+				<CommonStyles.FlexWrapper className={classNames.manageNotes}>
 					{notes.length > 0 && (
-						<div className={classNames.toggleCompleteAllNotes}>
-							<Checkbox
-								isChecked={
-									notes.length &&
-									notes.every(note => note.isComplete)
-								}
-								onChange={onToggleCompleteAllChange}
-							/>
-						</div>
-					)}
-					<div className={classNames.createNoteContentInput}>
-						<Textbox
-							defaultValue=""
-							onSubmit={onSubmitNewNote}
-							clearValueAfterSubmit={true}
-							placeholderText={"Describe here the task to do..."}
+						<Checkbox
+							isChecked={
+								notes.length &&
+								notes.every(note => note.isComplete)
+							}
+							onChange={onToggleCompleteAllChange}
 						/>
-					</div>
-				</div>
+					)}
+					<Textbox
+						defaultValue=""
+						onSubmit={onSubmitNewNote}
+						clearValueAfterSubmit={true}
+						placeholderText={"Describe here the task to do..."}
+					/>
+				</CommonStyles.FlexWrapper>
 				<NotesList
 					notes={notes}
 					onNoteUpdated={onNoteUpdated}
 					onRemoveNotes={onRemoveNotes}
 				/>
-			</div>
-		</div>
+			</Styles.App>
+		</Styles.AppWrapper>
 	);
 }
 

@@ -1,9 +1,13 @@
-.notes-info {
+import styled from "styled-components";
+
+export const NotesList = styled.div``;
+
+export const NotesInfo = styled.div`
 	display: flex;
 	align-items: center;
-}
+`;
 
-.notes-management {
+export const NotesManagement = styled.div`
 	padding: 10px 30px;
 	display: grid;
 	grid-template-columns: 1fr 3fr 1fr;
@@ -13,18 +17,20 @@
 	margin-bottom: 15px;
 	border-radius: 40px;
 	margin-top: 12px;
-}
+`;
 
-.notes-filter-buttons {
+export const NotesFilterButtons = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-}
+`;
 
-.notes-filter-buttons > :not(:last-child) {
-	margin-right: 10px;
-}
+export const NotesFilterButton = styled.div`
+	&:not(:last-child) {
+		margin-right: 10px;
+	}
+`;
 
-.clear-completed-notes-button {
+export const ClearCompletedNotesButton = styled.div`
 	text-align: right;
-}
+`;

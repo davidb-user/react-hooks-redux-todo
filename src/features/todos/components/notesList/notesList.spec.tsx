@@ -1,5 +1,9 @@
 import React from "react";
-import { generateNote, noteMock, notesMock } from "../../../../test/mockData";
+import {
+	generateNote,
+	noteMock,
+	notesMock,
+} from "../../../../../test/mockData";
 import {
 	fireEvent,
 	getQueriesForElement,
@@ -11,9 +15,9 @@ import {
 	queryAllByClassName,
 	queryByClassName,
 	queryBySelector,
-} from "../../../../test/queries";
+} from "../../../../../test/queries";
 import userEvent from "@testing-library/user-event";
-import { createNoteId, NoteModel } from "../types/note";
+import { createNoteId, NoteModel } from "../../types/note";
 
 export const getNotesList = (container: HTMLElement) =>
 	queryByClassName(container, classNames.notesList);
