@@ -4,6 +4,9 @@ import App, { classNames } from "./app";
 import { queryByClassName, queryBySelector } from "../../../test/queries";
 import { getNotes, getNotesList } from "../notesList/notesList.spec";
 import userEvent from "@testing-library/user-event";
+import { Provider } from "react-redux";
+import store from "../../store/store";
+import { renderWithProviders } from "../../../test/renderWithProviders";
 
 const getApp = (container: HTMLElement) =>
 	queryByClassName(container, classNames.app);
@@ -30,12 +33,10 @@ async function createNote(
 	content: string,
 	isCompleted?: boolean,
 ) {
-	if (!content) {
-		await user.type(await getCreateNoteContentInput(app), "{enter}");
-	} else {
+	if (content) {
 		await user.type(await getCreateNoteContentInput(app), content);
-		await user.type(await getCreateNoteContentInput(app), "{enter}");
 	}
+	await user.type(await getCreateNoteContentInput(app), "{enter}");
 
 	if (isCompleted) {
 		const allCheckboxes = await getQueriesForElement(
@@ -51,7 +52,7 @@ describe("App", () => {
 	describe("elements", () => {
 		describe("root element", () => {
 			it("should be created", () => {
-				const { container } = render(<App />);
+				const { container } = renderWithProviders(<App />);
 
 				expect(getApp(container)).toBeInTheDocument();
 			});
@@ -59,7 +60,7 @@ describe("App", () => {
 
 		describe("notes list", () => {
 			it("should be created", () => {
-				const { container } = render(<App />);
+				const { container } = renderWithProviders(<App />);
 
 				const app = getApp(container);
 
@@ -75,7 +76,7 @@ describe("App", () => {
 			});
 
 			it("should be created", async () => {
-				const { container } = render(<App />);
+				const { container } = renderWithProviders(<App />);
 
 				const app = getApp(container);
 
@@ -88,7 +89,7 @@ describe("App", () => {
 
 			describe("no notes", () => {
 				it(`should not be created`, async () => {
-					const { container } = render(<App />);
+					const { container } = renderWithProviders(<App />);
 
 					const app = getApp(container);
 
@@ -98,7 +99,7 @@ describe("App", () => {
 
 			describe("all notes not completed", () => {
 				it(`should not be checked`, async () => {
-					const { container } = render(<App />);
+					const { container } = renderWithProviders(<App />);
 					const app = getApp(container);
 					const contents = [...Array(10).keys()].map(
 						index => `content${index}`,
@@ -116,7 +117,7 @@ describe("App", () => {
 
 			describe("notes complete statuses varies", () => {
 				it(`should not be checked`, async () => {
-					const { container } = render(<App />);
+					const { container } = renderWithProviders(<App />);
 					const app = getApp(container);
 					const contents = [...Array(10).keys()].map(
 						index => `content${index}`,
@@ -140,7 +141,7 @@ describe("App", () => {
 
 			describe("all notes completed", () => {
 				it(`should be checked`, async () => {
-					const { container } = render(<App />);
+					const { container } = renderWithProviders(<App />);
 					const app = getApp(container);
 					const contents = [...Array(10).keys()].map(
 						index => `content${index}`,
@@ -157,7 +158,7 @@ describe("App", () => {
 
 		describe("create note content input", () => {
 			it("should be created", async () => {
-				const { container } = render(<App />);
+				const { container } = renderWithProviders(<App />);
 
 				const app = getApp(container);
 
@@ -178,7 +179,7 @@ describe("App", () => {
 		describe("toggle complete all notes", () => {
 			describe("all notes completed", () => {
 				it(`should call props onChange with false value`, async () => {
-					const { container } = render(<App />);
+					const { container } = renderWithProviders(<App />);
 					const app = getApp(container);
 					const contents = [...Array(10).keys()].map(
 						index => `content${index}`,
@@ -200,7 +201,7 @@ describe("App", () => {
 
 			describe("all notes not completed", () => {
 				it(`should call props onChange with true value`, async () => {
-					const { container } = render(<App />);
+					const { container } = renderWithProviders(<App />);
 					const app = getApp(container);
 					const contents = [...Array(10).keys()].map(
 						index => `content${index}`,
@@ -223,7 +224,7 @@ describe("App", () => {
 
 			describe("notes complete statuses varies", () => {
 				it(`should call props onChange with true value`, async () => {
-					const { container } = render(<App />);
+					const { container } = renderWithProviders(<App />);
 					const app = getApp(container);
 					const contents = [...Array(10).keys()].map(
 						index => `content${index}`,
@@ -256,7 +257,7 @@ describe("App", () => {
 				describe("note content is empty", () => {
 					it(`should not create a new note`, async () => {
 						const content = "";
-						const { container } = render(<App />);
+						const { container } = renderWithProviders(<App />);
 						const app = getApp(container);
 
 						await createNote(user, app, content);
@@ -269,7 +270,7 @@ describe("App", () => {
 				describe("no notes available", () => {
 					it(`should add a new note`, async () => {
 						const content = "content";
-						const { container } = render(<App />);
+						const { container } = renderWithProviders(<App />);
 						const app = getApp(container);
 
 						await createNote(user, app, content);
@@ -286,7 +287,7 @@ describe("App", () => {
 							index => `content${index}`,
 						);
 
-						const { container } = render(<App />);
+						const { container } = renderWithProviders(<App />);
 						const app = getApp(container);
 
 						for (const content of contents) {
@@ -304,7 +305,7 @@ describe("App", () => {
 
 					it(`should clear input after adding new note`, async () => {
 						const content = "content";
-						const { container } = render(<App />);
+						const { container } = renderWithProviders(<App />);
 						const app = getApp(container);
 
 						await createNote(user, app, content);

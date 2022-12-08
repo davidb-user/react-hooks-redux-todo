@@ -1,9 +1,9 @@
-import { Note } from "../src/models/note";
+import { createNoteId, Note } from "../src/models/note";
 
 export const generateNote = ({
 	isComplete,
 	content,
-}: Partial<Note> = {}): Note => new Note({ content, isComplete });
+}: Partial<Note> = {}): Note => ({ id: createNoteId(), content, isComplete });
 
 function generateNotesList(length: number): Note[] {
 	return Array.from({ length }, generateNote);

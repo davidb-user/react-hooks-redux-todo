@@ -13,7 +13,7 @@ import {
 	queryBySelector,
 } from "../../../test/queries";
 import userEvent from "@testing-library/user-event";
-import { Note } from "../../models/note";
+import { createNoteId, Note } from "../../models/note";
 
 export const getNotesList = (container: HTMLElement) =>
 	queryByClassName(container, classNames.notesList);
@@ -219,8 +219,12 @@ describe("NotesList", () => {
 
 			describe("completed notes available", () => {
 				it("should not display button", () => {
-					const notes = [
-						new Note({ content: "content", isComplete: true }),
+					const notes: Note[] = [
+						{
+							id: createNoteId(),
+							content: "content",
+							isComplete: true,
+						},
 					];
 					const { container } = render(
 						<NotesList
@@ -424,9 +428,21 @@ describe("NotesList", () => {
 				describe("completed notes available", () => {
 					it("should ask to remove completed notes", async () => {
 						const notes = [
-							new Note({ content: "content", isComplete: true }),
-							new Note({ content: "content", isComplete: true }),
-							new Note({ content: "content", isComplete: false }),
+							{
+								id: createNoteId(),
+								content: "content",
+								isComplete: true,
+							},
+							{
+								id: createNoteId(),
+								content: "content",
+								isComplete: true,
+							},
+							{
+								id: createNoteId(),
+								content: "content",
+								isComplete: false,
+							},
 						];
 						const completedNoteIds = notes
 							.filter(note => note.isComplete)

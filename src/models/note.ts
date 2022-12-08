@@ -1,5 +1,6 @@
 export type NoteId = string;
-function createId(): NoteId {
+
+export function createNoteId(): NoteId {
 	return "id" + Math.random().toString(16).slice(2);
 }
 
@@ -8,13 +9,6 @@ export interface NoteDetails {
 	isComplete: boolean;
 }
 
-export class Note implements NoteDetails {
-	id: NoteId = createId();
-	content: string;
-	isComplete: boolean;
-
-	constructor({ content, isComplete }: NoteDetails) {
-		this.content = content;
-		this.isComplete = isComplete;
-	}
+export interface Note extends NoteDetails {
+	id: NoteId;
 }

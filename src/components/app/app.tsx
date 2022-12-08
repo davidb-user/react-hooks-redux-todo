@@ -1,5 +1,11 @@
-import React, { useState } from "react";
-import { Note, NoteDetails } from "../../models/note";
+import { NoteDetails } from "../../models/note";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import {
+	addNote,
+	removeNotes,
+	setAllNotesCompleteState,
+	updateNote,
+} from "../../store/slice";
 import Checkbox from "../inputs/checkbox/checkbox";
 import Textbox from "../inputs/textbox/textbox";
 import NotesList from "../notesList/notesList";
@@ -14,7 +20,8 @@ export const classNames = {
 };
 
 export function App(): JSX.Element {
-	const [notes, setNotes] = useState<Note[]>([]);
+	const notes = useAppSelector(state => state.notes);
+	const dispatch = useAppDispatch();
 
 	function onNoteUpdated(
 		updatedNoteId: string,
@@ -23,22 +30,17 @@ export function App(): JSX.Element {
 		if (updatedNoteDetails.content === "") {
 			onRemoveNotes([updatedNoteId]);
 		} else {
-			setNotes(
-				notes.map(note => {
-					return note.id === updatedNoteId
-						? { ...note, ...updatedNoteDetails }
-						: note;
+			dispatch(
+				updateNote({
+					noteId: updatedNoteId,
+					newNoteDetails: updatedNoteDetails,
 				}),
 			);
 		}
 	}
 
 	function onRemoveNotes(noteIdsToRemove: string[]) {
-		setNotes(
-			notes.filter(note => {
-				return !noteIdsToRemove.includes(note.id);
-			}),
-		);
+		dispatch(removeNotes({ noteIdsToRemove }));
 	}
 
 	function onSubmitNewNote(noteContent: string) {
@@ -46,19 +48,17 @@ export function App(): JSX.Element {
 			return;
 		}
 
-		const newNote = new Note({ content: noteContent, isComplete: false });
-		setNotes([...notes, newNote]);
+		dispatch(addNote({ noteContent }));
 	}
 
 	function onToggleCompleteAllChange() {
 		const areAllNotesComplete =
 			notes.length && notes.every(note => note.isComplete);
 
-		setNotes(
-			notes.map(note => ({
-				...note,
-				isComplete: !areAllNotesComplete,
-			})),
+		dispatch(
+			setAllNotesCompleteState({
+				newIsCompleteStatus: !areAllNotesComplete,
+			}),
 		);
 	}
 
